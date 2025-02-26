@@ -12,11 +12,12 @@ export const App = () => {
 
 	const onInputButtonClick = () => {
 		const promptValue = prompt('Введите новое значение');
-		setValue(promptValue);
+		setValue(promptValue.trim());
+			
 
 		if (promptValue.length < 3) {
-			setIsValueVaild(!isValueVaild);
 			setError('Введенное значение должно содержать минимум 3 символа');
+			setIsValueVaild(isValueVaild);
 		} else {
 			setIsValueVaild(!isValueVaild);
 			setError('');
@@ -24,7 +25,7 @@ export const App = () => {
 	};
 
 	const onAddButtonClick = () => {
-		if (isValueVaild) {
+		if (value.length >= 3) {
 			const updatedList = [
 				...list,
 				{
@@ -36,6 +37,10 @@ export const App = () => {
 			setlist(updatedList);
 			setIsValueVaild(!isValueVaild);
 		}
+		else{
+			setIsValueVaild(!isValueVaild);
+		}
+		
 	};
 
 	return (
@@ -45,9 +50,9 @@ export const App = () => {
 				Текущее значение <code>value</code>:&quot;{value}&quot;
 				<output className={styles['current-value']}></output>
 			</p>
-			{error != '' && (
+			{error && (
 				<div className={styles.error}>
-					Введенное значение должно содержать минимум 3 символа
+					{error}
 				</div>
 			)}
 
