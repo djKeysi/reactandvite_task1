@@ -5,23 +5,28 @@ import { useState } from 'react';
 export const App = () => {
 	const date = new Date();
 
-	const [value, setValue] = useState('');
+	let [value, setValue] = useState('');
 	const [list, setlist] = useState([]);
 	const [error, setError] = useState('');
 	const [isValueVaild, setIsValueVaild] = useState(false);
 
+
 	const onInputButtonClick = () => {
-		const promptValue = prompt('Введите новое значение');
+		let promptValue = prompt('Введите новое значение');
 		setValue(promptValue.trim());
 			
-
-		if (promptValue.length < 3) {
-			setError('Введенное значение должно содержать минимум 3 символа');
-			setIsValueVaild(isValueVaild);
-		} else {
-			setIsValueVaild(!isValueVaild);
+		
+		if (promptValue.length >= 3) {
 			setError('');
+			setIsValueVaild(true);
+			
+		} 
+		else{
+			setIsValueVaild(false);
+			setError('Введенное значение должно содержать минимум 3 символа');
 		}
+			
+		
 	};
 
 	const onAddButtonClick = () => {
@@ -35,9 +40,6 @@ export const App = () => {
 				},
 			];
 			setlist(updatedList);
-			setIsValueVaild(!isValueVaild);
-		}
-		else{
 			setIsValueVaild(!isValueVaild);
 		}
 		
@@ -57,10 +59,13 @@ export const App = () => {
 			)}
 
 			<div className={styles['buttons-container']}>
+				
 				<button onClick={onInputButtonClick} className={styles['button']}>
 					Ввести новое
-				</button>
 
+				</button>
+				
+				
 				<button
 					onClick={onAddButtonClick}
 					className={styles['button']}
